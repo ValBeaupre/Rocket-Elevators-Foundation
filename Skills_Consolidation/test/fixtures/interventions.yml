@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  author: one
+  customer: one
+  building: one
+  battery: one
+  column: one
+  elevator: one
+  employee: one
+  interventionStartTime: 2018-11-09 17:13:32
+  interventionEndTime: 2018-11-09 17:13:32
+  result: MyString
+  report: MyString
+  status: MyString
+
+two:
+  author: two
+  customer: two
+  building: two
+  battery: two
+  column: two
+  elevator: two
+  employee: two
+  interventionStartTime: 2018-11-09 17:13:32
+  interventionEndTime: 2018-11-09 17:13:32
+  result: MyString
+  report: MyString
+  status: MyString
