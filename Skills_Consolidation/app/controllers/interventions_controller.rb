@@ -47,46 +47,43 @@ class InterventionsController < ApplicationController
 
     def create_intervention
         puts "CREATE Intervention"
+        puts params[:intervention]
+        puts params[:intervention][:column_id]
+        puts params[:intervention]["column_id"]
+        puts params["intervention"]["column_id"]
+        params["intervention"].delete("column_id") if params["intervention"]["column_id"] == "Nil"
+        params["intervention"].delete("elevator_id") if params["intervention"]["elevator_id"] == "Nil"
         attributes = params[:intervention].permit!
         puts params
         puts "^ params ^"
         #ajouter author_id dans le hash 'attributes' ici = current user de la session
-        attributes[:author_id] = current_user.id
+        attributes[:author_id] = current_user.employee.id 
         puts attributes
         puts "^ attributes ^"
-        intervention = Intervention.create(attributes)
+        intervention = Intervention.new(attributes)
         if !intervention.valid? 
-            puts intervention.errors
+            puts "*****************INVALIDE*************************"
+            intervention.errors.each do |error|
+                puts error      
+            end
             puts "^ errors ^"
+        else
+            intervention.save
         end 
 
         intervention_ticket(intervention)
-    end
-    
+    end    
 
     def intervention_ticket(intervention)
 
-        comment = { :value => "Intervention ticket author: #{intervention.author} 
+        comment = { :value => "Intervention ticket author: #{intervention.author.first_name} #{intervention.author.first_name}
         \n \n Client: #{intervention.customer.business_name} 
         \n \n Building name: #{intervention.building.building_name} 
-        \n \n Battery: #{intervention.battery.battery_id} 
-        \n \n Column: #{intervention.column.column_id} 
-        \n \n Elevator shaft: #{intervention.elevator.elevator_id} 
+        \n \n Battery: #{intervention.battery ? intervention.battery.id : "N/Ap"} 
+        \n \n Column: #{intervention.column ? intervention.column.id : "N/Ap"} 
+        \n \n Elevator shaft: #{intervention.elevator ? intervention.elevator.id : "N/Ap"} 
         \n \n Intervention assigned to: #{intervention.employee.first_name} #{intervention.employee.last_name} 
         \n \n Intervention description: #{intervention.report} "}
-
-        # if intervention.column_id != nil
-        #  !!   comment = "Column : #{intervention.column_id}"
-        #     else
-        #  !!   bat_message = "N/Ap"
-        # end
-
-        # if intervention.battery_id != nil
-        #     bat_message = "Elevator : #{intervention.elevator_id}"
-        #     else
-        #     bat_message = "N/Ap"
-        # end
-
 
         ticket = ZendeskAPI::Ticket.new($client, :type => "support", :priority => "urgent",
         :subject => "Intervention ticket for the #{intervention.customer.business_name} building",
