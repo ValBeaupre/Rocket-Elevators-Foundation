@@ -9,3 +9,4 @@
 //= require owl.carousel
 //= require owl.carousel.min
 //= require Chart
+//= require intervention

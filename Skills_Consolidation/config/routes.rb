@@ -8,13 +8,16 @@ Rails.application.routes.draw do
   get '/residential' => 'home#residential'
   get '/commercial' => 'home#commercial'
   get '/quote' => 'quote#quote'
- # get '/index-Interventions' => 'interventions#interventions'
-  get '/index-RocketElevators.html' => 'home#index'
-  get '/index-rocketElevators-residential.html' => 'home#residential'
-  get '/index-rocketElevators-commercial.html' => 'home#commercial'
-  get '/index-Quote.html' => 'quote#quote'
+ # get '/interventions' => 'interventions#interventions'
+  get '/index_rocket_elevators.html' => 'home#index'
+  get '/rocket_elevators_residential.html' => 'home#residential'
+  get '/rocket_elevators_commercial.html' => 'home#commercial'
+  get '/quote.html' => 'quote#quote'
   post '/new_quote' => 'quote#new_quote'
   post '/new_lead' => 'lead#new_lead'
+  post '/new_intervention' => 'interventions#new_intervention'
+  post '/create_intervention' => 'interventions#create_intervention'
+  post '/intervention_ticket' => 'interventions#intervention_ticket'
   get '/chart' => 'charts#chart'
   get '/google' => 'google#google'
  
@@ -29,3 +32,15 @@ Rails.application.routes.draw do
   root 'home#index'
 
 end
+
+=begin 
+Rails.application.routes.draw do
+ devise_for :users
+ mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
+ authenticate :user do
+   mount Blazer::Engine, at: "blazer"
+   get 'pages/intervention'
+   post '/new_intervention' => 'interventions#new_intervention'
+end 
+=end

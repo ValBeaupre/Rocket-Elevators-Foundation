@@ -18,21 +18,10 @@ class LeadController < ApplicationController
     lead.valid?
     p lead.errors
     lead.save!
-
-  comment = { :value => "The contact #{lead.full_name} from company #{lead.company_name} can be reached at email #{lead.email} and at phone number #{lead.phone}. \n \n #{lead.department} has a project name #{lead.project_name} which will require contribution from Rocket Elevators. \n \n #{lead.project_description} \n \n Attached message #{lead.message} \n \n The contact uploaded an attachment. " }
-
-
-    ticket = ZendeskAPI::Ticket.new($client, :type => "question", :priority => "urgent",
-        :subject => "#{lead.full_name} from #{lead.company_name}",
-        :comment => comment    
-    )
-
-    ticket.save!
-    
+   
     
     # using SendGrid's Ruby Library
     # https://github.com/sendgrid/sendgrid-ruby
-
 
     data = JSON.parse("{
         \"personalizations\": [
@@ -56,6 +45,17 @@ class LeadController < ApplicationController
       }")
       sg = SendGrid::API.new(api_key: ENV['SendGrid_API'])
       response = sg.client.mail._("send").post(request_body: data)
+
+
+    # New Lead for Zendesk :
+    comment = { :value => "The contact #{lead.full_name} from company #{lead.company_name} can be reached at email #{lead.email} and at phone number #{lead.phone}. \n \n #{lead.department} has a project name #{lead.project_name} which will require contribution from Rocket Elevators. \n \n #{lead.project_description} \n \n Attached message #{lead.message} \n \n The contact uploaded an attachment. " }
+
+    ticket = ZendeskAPI::Ticket.new($client, :type => "question", :priority => "urgent",
+        :subject => "#{lead.full_name} from #{lead.company_name}",
+        :comment => comment    
+    )
+
+    ticket.save!
 
   end
 end
