@@ -1,70 +1,3 @@
-<%# <script>
-
-    function change_client() {
-        //console.log($("#client").val());
-        $.get( "get_buildings_for_client?client_id=" + $("#client").val() , function( list_buildings ) {
-            console.log('clnt');
-            console.log(list_buildings);
-            html = "";
-            for (var i = 0; i < list_buildings.length; i++) {
-               html = html + "<option value='" + list_buildings[i].id + "'>" + list_buildings[i].building_name + "</option>";     
-            }
-            console.log(html);
-            //console.log($('#select_building'));
-            $('#select_building').append(html);
-        });
-    }
-
-    function change_building() {
-        console.log('bldg');
-        //console.log($("#select_building").val());
-        $.get("get_batteries_for_building?building_id=" + $("#select_building").val() , function(list_batteries) {
-            console.log("battery");
-            console.log(list_batteries);
-            html = "";
-            for (var i = 0; i < list_batteries.length; i++) {
-                html = html + "<option value='" + list_batteries[i].id + "'>" + list_batteries[i].id + "</option>";
-            }
-            console.log(html);
-            //console.log($('#select_battery'));
-            $('#select_battery').append(html);
-        });
-    }
-
-    function change_battery() {
-        console.log("bttr");
-        //console.log($("#select_battery").val());
-        $.get("get_columns_for_battery?battery_id=" + $("#select_battery").val() , function(list_columns) {
-            console.log("column");
-            console.log(list_columns);
-            html = "";
-            for (var i = 0; i < list_columns.length; i++) {
-                html = html + "<option value='" + list_columns[i].id + "'>" + list_columns[i].id + "</option>";
-            }
-            console.log(html);
-            //console.log($('#select_column'));
-            $('#select_column').append(html);
-        })
-    }
-
-    function change_column() {
-        console.log("clmn");
-        //console.log($("#select_column").val());
-        $.get("get_elevators_for_column?column_id=" + $("#select_column").val() , function(list_elevators) {
-            console.log("elevator");
-            console.log(list_elevators);
-            html = "";
-            for (var i = 0; i< list_elevators.length; i++) {
-                //console.log("for elevator", list_elevators[i].id)
-                html = html + "<option value='" + list_elevators[i].id + "'>" + list_elevators[i].id + "</option>";
-            }
-            //console.log($('#select_elevator'));
-            $('#elevator').append(html);
-        })
-    }
-
-</script> %>
-
 <div class="tab-content" id="submission-tabContent">
 
     <section id="intervention">
@@ -74,14 +7,6 @@
                 <h2 style="color: royalblue">Interventions</h2>
             </div>
         </div>
-
-        <% if flash.now[:error].present? %>
-        <p class='flash-error'><%= flash[:error] %></p>
-        <% end %>
-
-        <% if flash.now[:notice].present? %>
-        <p class='flash-notice'><%= flash[:notice] %></p>
-        <% end %>
         
         <%= form_for :interventions, url: url_for(controller: 'interventions', action: 'create_intervention'),  :html => {id: "interventionSubmit", :class => "validate text-center"} do |f|%>
             <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
@@ -89,11 +14,8 @@
             <fieldset>
                 <input type="hidden" name="action" value="intervention_send" />
 
-                <% f.hidden_field :value %>
-
                 <div class="col-md-6 mx-auto text-center text-blue offset-md-3">
                     <label for="intervention_clients"><b>CLIENTS *</b></label>
-                    <%# <%= f.text_field :clients, :required => true, type: "text", class: "form-control elevators", id: "resQuote_resNbApartments", :onChange => "building()" %>
                     <select id="client" onChange="change_client()" class="form-control pointer" name="intervention[customer_id]" required>
                         <option value="">--- Select One ---</option>
                         <% @clients.each do |c|%>
@@ -136,9 +58,9 @@
                 <hr>
 
                 <div class="col-md-3 mx-auto text-blue text-center">
-                    <label for="intervention_employee"><b>EMPLOYEE *</b></label>
-                    <select id="employee" class="form-control pointer" name="intervention[employee_id]" required>
-                        <option value="">--- Select One ---</option>
+                    <label for="intervention_employee"><b>EMPLOYEE</b></label>
+                    <select id="employee" class="form-control pointer" name="intervention[employee_id]">
+                        <option value="">--- None ---</option>
                         <% @employee.each do |e|%>
                             <option value="<%= e.id %>"><%= e.first_name%> <%= e.last_name%></option>
                         <% end %>
@@ -150,7 +72,7 @@
                 <div class="col-md-12 mx-auto text-blue text-center">
                     <label for="intervention_description"><b>Intervention Description *</b></label>
                     <%# <input required type="text" value="" class="form-control" name="intervention[description][required]" required id="intervention:description"> %>
-                    <textarea required maxlength="10000" rows="4" class="form-control" name="intervention[report]" required id="intervention:description"></textarea>
+                    <textarea required rows="4" class="form-control" name="intervention[report]" required id="intervention:description"></textarea>
                 </div>
 
                 </br>
@@ -161,7 +83,7 @@
                     <div class="col-md-12 text-center">
                         <p>
                             <%= button_tag(class: "btn btn-red btn-danger btn-outline-primary") do %>
-                                <i id="interventionSubmit" class="fa fa-check"></i> SUBMIT
+                                <i class="fa fa-check"></i> SUBMIT
                             <% end %>
                         </p>
                     </div>
@@ -174,6 +96,26 @@
                 </div>
 
             </fieldset>
+
+            <script>
+                $("#interventionSubmit").submit(function(event){
+                    event.preventDefault(); //prevent default action 
+                    var post_url = $(this).attr("action"); //get form action url
+                    var request_method = $(this).attr("method"); //get form GET/POST method
+                    var form_data = $(this).serialize(); //Encode form elements for submission
+                    console.log("hello", post_url, request_method, form_data)
+                    
+                    $.ajax({
+                        url : post_url,
+                        type: request_method,
+                        data : form_data
+                    }).done(function(response){ //
+                        alert('YOUR TICKET HAS BEEN RECEIVED');
+                        window.location="/";
+                    });
+                });
+            </script>
+
         <% end %>
     </section>
 </div>

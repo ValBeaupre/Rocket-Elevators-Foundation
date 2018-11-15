@@ -3333,6 +3333,7 @@ body.menu-vertical #mainMenu.sidebar-vertical .navbar-collapse>ul.nav.navbar-nav
 		padding:0;
 		display:block;
 		z-index:100;
+		position: relative;
 	}
 	#topNav ul.dropdown-menu li .badge {
 		margin-top:4px;

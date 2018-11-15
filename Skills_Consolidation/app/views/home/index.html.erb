@@ -1,4 +1,13 @@
 	<!-- REVOLUTION SLIDER -->
+
+	<% if flash[:error].present? %>
+	<p class='flash-error'><%= flash[:error] %></p>
+	<% end %>
+
+	<% if flash[:notice].present? %>
+	<p class='flash-notice'><%= flash[:notice] %></p>
+	<% end %>
+		
 		<div class="slider fullwidthbanner-container roundedcorners">
 
 			<div class="fullwidthbanner" data-height="600" data-shadow="0" data-navigationStyle="preview2">

@@ -76,14 +76,14 @@ class InterventionsController < ApplicationController
 
     def intervention_ticket(intervention)
 
-        comment = { :value => "Intervention ticket author: #{intervention.author.first_name} #{intervention.author.first_name}
+        comment = { :value => "Intervention ticket author: #{intervention.author.first_name} #{intervention.author.last_name}
         \n \n Client: #{intervention.customer.business_name} 
-        \n \n Building name: #{intervention.building.building_name} 
-        \n \n Battery: #{intervention.battery ? intervention.battery.id : "N/Ap"} 
-        \n \n Column: #{intervention.column ? intervention.column.id : "N/Ap"} 
-        \n \n Elevator shaft: #{intervention.elevator ? intervention.elevator.id : "N/Ap"} 
-        \n \n Intervention assigned to: #{intervention.employee.first_name} #{intervention.employee.last_name} 
-        \n \n Intervention description: #{intervention.report} "}
+        \n \n Building #: #{intervention.building.id}   (#{intervention.building.building_name})
+        \n \n Battery #: #{intervention.battery.id} 
+        \n \n Column #: #{intervention.column ? intervention.column.id : "N/Ap"} 
+        \n \n Elevator shaft #: #{intervention.elevator ? intervention.elevator.id : "N/Ap"} 
+        \n \n Intervention assigned to: #{intervention.employee ? intervention.employee.first_name : "None"} #{intervention.employee ? intervention.employee.last_name : ""} 
+        \n \n Intervention description: \n #{intervention.report} "}
 
         ticket = ZendeskAPI::Ticket.new($client, :type => "support", :priority => "urgent",
         :subject => "Intervention ticket for the #{intervention.customer.business_name} building",
