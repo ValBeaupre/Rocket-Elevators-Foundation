@@ -103,14 +103,13 @@
                     var post_url = $(this).attr("action"); //get form action url
                     var request_method = $(this).attr("method"); //get form GET/POST method
                     var form_data = $(this).serialize(); //Encode form elements for submission
-                    console.log("hello", post_url, request_method, form_data)
                     
                     $.ajax({
                         url : post_url,
                         type: request_method,
                         data : form_data
                     }).done(function(response){ //
-                        alert('YOUR TICKET HAS BEEN RECEIVED');
+                        alert('THANK YOU! YOUR TICKET HAS BEEN RECEIVED');
                         window.location="/";
                     });
                 });

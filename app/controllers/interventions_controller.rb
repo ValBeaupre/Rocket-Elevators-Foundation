@@ -2,7 +2,6 @@ class InterventionsController < ApplicationController
     before_action :authenticate_user!
 
     def new
-        puts "NEW"
         @clients = Customer.order(:business_name)
         puts @clients.collect{ |c| c.business_name }
 
@@ -11,62 +10,38 @@ class InterventionsController < ApplicationController
     end
 
     def get_buildings_for_client
-        puts "get_buildings_for_client"
-        puts params
         id_client = params[:client_id]
         @buildings = Building.where(customer_id: id_client)
-        puts @buildings
         render json: @buildings
     end    
     
     def get_batteries_for_building
-        puts "get_batteries_for_building"
-        puts params
         id_building = params[:building_id]
         @batteries = Battery.where(building_id: id_building)
-        puts @batteries
         render json: @batteries
     end
 
     def get_columns_for_battery
-        puts "get_columns_for_battery"
-        puts params
         @columns = Column.where(battery_id: params[:battery_id])
-        puts @columns
         render json: @columns
     end
 
     def get_elevators_for_column
-        puts "get_elevators_for_column"
-        puts params
         @elevators = Elevator.where(column_id: params[:column_id])
-        puts @elevators
         render json: @elevators
     end 
 
 
     def create_intervention
-        puts "CREATE Intervention"
-        puts params[:intervention]
-        puts params[:intervention][:column_id]
-        puts params[:intervention]["column_id"]
-        puts params["intervention"]["column_id"]
         params["intervention"].delete("column_id") if params["intervention"]["column_id"] == "Nil"
         params["intervention"].delete("elevator_id") if params["intervention"]["elevator_id"] == "Nil"
         attributes = params[:intervention].permit!
-        puts params
-        puts "^ params ^"
-        #ajouter author_id dans le hash 'attributes' ici = current user de la session
         attributes[:author_id] = current_user.employee.id 
-        puts attributes
-        puts "^ attributes ^"
         intervention = Intervention.new(attributes)
         if !intervention.valid? 
-            puts "*****************INVALIDE*************************"
             intervention.errors.each do |error|
                 puts error      
             end
-            puts "^ errors ^"
         else
             intervention.save
         end 
