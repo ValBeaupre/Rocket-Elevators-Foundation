@@ -33,20 +33,22 @@ class InterventionsController < ApplicationController
 
 
     def create_intervention
+        puts params
         params["intervention"].delete("column_id") if params["intervention"]["column_id"] == "Nil"
         params["intervention"].delete("elevator_id") if params["intervention"]["elevator_id"] == "Nil"
         attributes = params[:intervention].permit!
+        puts attributes
         attributes[:author_id] = current_user.employee.id 
+        
         intervention = Intervention.new(attributes)
-        if !intervention.valid? 
-            intervention.errors.each do |error|
-                puts error      
-            end
-        else
-            intervention.save
-        end 
+        puts "************************intervention***********************************"
+        puts intervention.valid?
+        puts intervention.errors.full_messages
+        intervention.save
+        puts "saved"
 
         intervention_ticket(intervention)
+        puts "created"
     end    
 
     def intervention_ticket(intervention)

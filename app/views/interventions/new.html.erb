@@ -8,7 +8,7 @@
             </div>
         </div>
         
-        <%= form_for :interventions, url: url_for(controller: 'interventions', action: 'create_intervention'),  :html => {id: "interventionSubmit", :class => "validate text-center"} do |f|%>
+        <%= form_for :interventions, url: url_for(controller: 'interventions', action: 'create_intervention'),  :html => {id: "interventionSubmit", :class => "text-center"} do |f|%>
             <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
             
             <fieldset>
@@ -98,6 +98,7 @@
             </fieldset>
 
             <script>
+            $( document ).ready(function() {
                 $("#interventionSubmit").submit(function(event){
                     event.preventDefault(); //prevent default action 
                     var post_url = $(this).attr("action"); //get form action url
@@ -108,13 +109,15 @@
                         url : post_url,
                         type: request_method,
                         data : form_data
-                    }).done(function(response){ //
+                    }).done(function(response){ 
                         alert('THANK YOU! YOUR TICKET HAS BEEN RECEIVED');
                         window.location="/";
                     });
+                    return false;
                 });
-            </script>
+            });
 
+            </script>
         <% end %>
     </section>
 </div>
