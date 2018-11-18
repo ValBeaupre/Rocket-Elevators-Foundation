@@ -4,14 +4,14 @@
 
 https://valbeaupre.com
 
-* Interventions Management in Ruby on Rails 
+- Interventions Management in Ruby on Rails
 
-* ZenDesk API : https://codeboxx.zendesk.com 
+- ZenDesk API : https://codeboxx.zendesk.com
 
-* MySQL :  val_interventions 
+- MySQL : val_interventions
 
 </br>
 
 #### Author:
 
-Valerie Beaupre 
+Valerie Beaupre
