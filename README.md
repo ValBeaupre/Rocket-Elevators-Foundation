@@ -1,6 +1,6 @@
 # Rocket // Skills Consolidation // Odyssey Week 8
 
-### Rocket Elevators Fundation
+### Rocket Elevators Foundation
 
 https://valbeaupre.com
 
