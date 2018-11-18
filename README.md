@@ -1,24 +1,17 @@
-# README
+# Rocket // Skills Consolidation // Odyssey Week 8
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Rocket Elevators Fundation
 
-Things you may want to cover:
+https://valbeaupre.com
 
-* Ruby version
+* Interventions Management in Ruby on Rails 
 
-* System dependencies
+* ZenDesk API : https://codeboxx.zendesk.com 
 
-* Configuration
+* MySQL :  val_interventions 
 
-* Database creation
+</br>
 
-* Database initialization
+#### Author:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Valerie Beaupre 
