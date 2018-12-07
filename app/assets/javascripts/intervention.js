@@ -23,8 +23,7 @@ function change_building() {
   $.get(
     "get_batteries_for_building?building_id=" + $("#select_building").val(),
     function(list_batteries) {
-      html =
-        "<option value>--- Select One ---</option><option value>--- N/Ap ---</option>";
+      html = "<option value>--- Select One ---</option>";
       for (var i = 0; i < list_batteries.length; i++) {
         html =
           html +
