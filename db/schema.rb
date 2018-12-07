@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 2018_11_09_221332) do
     t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
-  create_table "interventions", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "interventions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "author_id"
     t.bigint "customer_id"
     t.bigint "building_id"

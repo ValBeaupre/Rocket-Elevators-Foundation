@@ -6,9 +6,9 @@ https://valbeaupre.com
 
 - Interventions Management in Ruby on Rails
 
-- ZenDesk API : https://codeboxx.zendesk.com
+- ZenDesk API : https://valbeaupre.zendesk.com
 
-- MySQL : val_interventions
+- MySQL : valerie
 
 </br>
 

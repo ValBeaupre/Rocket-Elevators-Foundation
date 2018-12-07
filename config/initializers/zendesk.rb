@@ -3,7 +3,7 @@ require 'zendesk_api'
 $client = ZendeskAPI::Client.new do |config|
 
     # Mandatory:
-    config.url = "https://codeboxx.zendesk.com/api/v2"
+    config.url = "https://valbeaupre.zendesk.com/api/v2"
 
     # Basic / Token Authentication
     config.username = "valbeaupre@hotmail.com"

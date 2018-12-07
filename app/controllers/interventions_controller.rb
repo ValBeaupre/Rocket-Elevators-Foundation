@@ -36,17 +36,18 @@ class InterventionsController < ApplicationController
         params["intervention"].delete("column_id") if params["intervention"]["column_id"] == "Nil"
         params["intervention"].delete("elevator_id") if params["intervention"]["elevator_id"] == "Nil"
         attributes = params[:intervention].permit!
+
         attributes[:author_id] = current_user.employee.id 
         
         intervention = Intervention.new(attributes)
-        intervention.save
+        intervention.save!
 
         intervention_ticket(intervention)
-    end    
+    end 
 
     def intervention_ticket(intervention)
 
-        comment = { :value => "Intervention ticket author: #{intervention.author.first_name} #{intervention.author.last_name}
+        comment = { :value => "Intervention ticket author: #{current_user.first_name} #{current_user.last_name}
         \n \n Client: #{intervention.customer.business_name} 
         \n \n Building #: #{intervention.building.id}   (#{intervention.building.building_name})
         \n \n Battery #: #{intervention.battery.id} 
