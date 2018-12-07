@@ -23,7 +23,8 @@ function change_building() {
   $.get(
     "get_batteries_for_building?building_id=" + $("#select_building").val(),
     function(list_batteries) {
-      html = "<option value>--- Select One ---</option>";
+      html =
+        "<option value>--- Select One ---</option><option value>--- N/Ap ---</option>";
       for (var i = 0; i < list_batteries.length; i++) {
         html =
           html +
@@ -44,7 +45,8 @@ function change_battery() {
   $.get(
     "get_columns_for_battery?battery_id=" + $("#select_battery").val(),
     function(list_columns) {
-      html = "<option value>--- Select One ---</option>";
+      html =
+        "<option value>--- Select One ---</option><option value>--- N/Ap ---</option>";
       for (var i = 0; i < list_columns.length; i++) {
         html =
           html +
@@ -64,7 +66,8 @@ function change_column() {
   $.get(
     "get_elevators_for_column?column_id=" + $("#select_column").val(),
     function(list_elevators) {
-      html = "<option value>--- Select One ---</option>";
+      html =
+        "<option value>--- Select One ---</option><option value>--- N/Ap ---</option>";
       for (var i = 0; i < list_elevators.length; i++) {
         html =
           html +
